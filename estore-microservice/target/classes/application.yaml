@@ -1,0 +1,45 @@
+spring:
+  main:
+    banner-mode: off
+  server:
+    port: 8081
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 50
+        page-parameter: page
+        size-parameter: size
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        default_schema: public
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: userok
+    password: p@ssword
+    driver-class-name: org.postgresql.Driver
+
+springdoc:
+  api-docs:
+    path: /openapi-estore
+  swagger-ui:
+    path: /estore-api.html
+    operations-sorter: method
+  model-converters:
+    pageable-converter:
+      enabled: true
+
+
+

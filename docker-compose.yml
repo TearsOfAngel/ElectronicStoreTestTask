@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./estore-microservice
+    image: estore_app:latest
+    container_name: estore_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: userok
+      SPRING_DATASOURCE_PASSWORD: p@ssword
+    depends_on:
+      - db
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend
+    image: estore_frontend:latest
+    container_name: estore_frontend
+    ports:
+      - "3000:8081"
+
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: userok
+      POSTGRES_PASSWORD: p@ssword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
